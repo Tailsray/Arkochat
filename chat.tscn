@@ -1,0 +1,113 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0iy2l7ipij5d"]
+
+[ext_resource type="Script" path="res://client.gd" id="1"]
+
+[node name="Chat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 1, 1)
+
+[node name="BackupTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
+[node name="UsernameDialog" type="PopupPanel" parent="."]
+initial_position = 1
+size = Vector2i(640, 360)
+always_on_top = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UsernameDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 636.0
+offset_bottom = 356.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UsernameDialog/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 40
+
+[node name="Prompt" type="Label" parent="UsernameDialog/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 60
+text = "КАК ТЕБЯ ЗОВУТ???
+???????????"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="UsernameDialog/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_right = 160
+
+[node name="LineEdit" type="LineEdit" parent="UsernameDialog/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Markinim"
+alignment = 1
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SetUsernameButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 644.0
+offset_right = 226.0
+offset_bottom = 703.0
+text = "Поставить юзернейм..."
+
+[node name="TextField" type="LineEdit" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 251.0
+offset_top = 644.0
+offset_right = 1171.0
+offset_bottom = 703.0
+
+[node name="SendButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 1188.0
+offset_top = 644.0
+offset_right = 1262.0
+offset_bottom = 704.0
+theme_override_font_sizes/font_size = 30
+text = "✈️"
+
+[node name="Scrollable" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 620.0
+horizontal_scroll_mode = 0
+
+[node name="MessageList" type="VBoxContainer" parent="Scrollable"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[connection signal="timeout" from="BackupTimer" to="." method="_on_timer_timeout"]
+[connection signal="text_submitted" from="UsernameDialog/VBoxContainer/MarginContainer2/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="Control/SetUsernameButton" to="." method="_on_set_username_button_pressed"]
+[connection signal="text_submitted" from="Control/TextField" to="." method="_on_text_field_text_submitted"]
+[connection signal="pressed" from="Control/SendButton" to="." method="send_message"]

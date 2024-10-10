@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://glumli5i4d3e"]
+
+[ext_resource type="Script" path="res://message.gd" id="1"]
+
+[node name="Message" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 70)
+offset_right = 1250.0
+offset_bottom = 70.0
+size_flags_vertical = 8
+script = ExtResource("1")
+
+[node name="H" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="MarginWho" type="MarginContainer" parent="H"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 8.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="LabelWho" type="Label" parent="H/MarginWho"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 48
+text = "Markinim"
+autowrap_mode = 3
+
+[node name="MarginWhat" type="MarginContainer" parent="H"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 17.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 20
+
+[node name="LabelWhat" type="Label" parent="H/MarginWhat"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 48
+autowrap_mode = 3
