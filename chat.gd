@@ -22,6 +22,9 @@ func _ready():
 		peer.create_server(1488, 100)
 		multiplayer.multiplayer_peer = peer
 		init_chats.rpc(1)
+	elif OS.is_debug_build():
+		peer.create_client("127.0.0.1", 1488)
+		multiplayer.multiplayer_peer = peer
 	else:
 		peer.create_client("194.87.102.218", 1488)
 		multiplayer.multiplayer_peer = peer
@@ -107,19 +110,31 @@ func _on_settings_popup_popup_hide():
 func _on_scroll_down_button_pressed():
 	scroll_bar.value = scroll_bar.max_value
 
-
-func _on_file_dialog_file_selected(path: String) -> void:
-	transfer.rpc_id(1,FileAccess.get_file_as_bytes(path), path.get_file())
-	print("Send_file: ", Time.get_ticks_msec())
-
-@rpc("any_peer", "reliable", "call_local")
-func transfer(data: PackedByteArray, filename: String) -> void:
-	print("write_file: ", Time.get_ticks_msec())
-	var sfile = FileAccess.open("user://" + filename, FileAccess.WRITE)
-	sfile.store_buffer(data)
-	print("received file")
-
-
-func retrieve_from_server(filename: String):
-	transfer.rpc_id(multiplayer.get_remote_sender_id(), FileAccess.get_file_as_bytes("user://" + filename), filename)
+func _on_file_send_pressed():
+	$FileSend/FileDialog.show()
 	
+func _on_file_dialog_file_selected(path: String) -> void:
+	send.rpc_id(
+		1,
+		FileAccess.get_file_as_bytes(path),
+		path.get_file()
+	)
+
+@rpc("any_peer", "call_remote", "reliable")
+func send(data: PackedByteArray, filename: String) -> void:
+	FileAccess.open("res://files/" + filename, FileAccess.WRITE).store_buffer(data)
+
+func _on_file_receive_pressed():
+	$FileReceive/LineEdit.show()
+	
+func _on_file_receive_line_edit_text_submitted(new_text):
+	fetch.rpc_id(1, new_text)
+
+@rpc("any_peer", "call_remote", "reliable")
+func fetch(filename: String) -> void:
+	if FileAccess.file_exists("res://files/" + filename):
+		send.rpc_id(
+			multiplayer.get_remote_sender_id(),
+			FileAccess.get_file_as_bytes("res://files/" + filename),
+			filename
+		)

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://chat.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cbnjlc156mw38" path="res://settings.tscn" id="2_5o6jm"]
-[ext_resource type="AudioStream" uid="uid://cx1oho7njtipa" path="res://max-verstappen.mp3" id="3_3v81b"]
-[ext_resource type="AudioStream" uid="uid://cdmqvw3vd4mq2" path="res://чай поставьте.mp3" id="4_4yh8y"]
+[ext_resource type="AudioStream" uid="uid://ebtl3n080uwi" path="res://max-verstappen.mp3" id="3_3v81b"]
+[ext_resource type="AudioStream" uid="uid://nbtfuxxp85a4" path="res://чай поставьте.mp3" id="4_4yh8y"]
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -209,18 +209,39 @@ text = "👎🏿"
 [node name="ChayPostavte" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_4yh8y")
 
-[node name="FilePick" type="Button" parent="."]
+[node name="FileSend" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 1189.0
 offset_top = 463.0
 offset_right = 1261.0
 offset_bottom = 533.0
+disabled = true
+text = "Send"
 
-[node name="FileDialog" type="FileDialog" parent="FilePick"]
+[node name="FileDialog" type="FileDialog" parent="FileSend"]
 title = "Open a File"
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+
+[node name="FileReceive" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1191.0
+offset_top = 353.0
+offset_right = 1260.0
+offset_bottom = 432.0
+disabled = true
+text = "Receive"
+
+[node name="LineEdit" type="LineEdit" parent="FileReceive"]
+visible = false
+layout_mode = 0
+offset_left = -278.0
+offset_top = 4.0
+offset_right = -21.0
+offset_bottom = 79.0
 
 [connection signal="settings_applied" from="." to="." method="on_settings_applied"]
 [connection signal="pressed" from="Settings/SettingsButton" to="Settings" method="open_settings"]
@@ -236,5 +257,7 @@ access = 2
 [connection signal="text_submitted" from="Control/TextField" to="." method="_on_text_field_text_submitted"]
 [connection signal="pressed" from="Control/SendButton" to="." method="send_message"]
 [connection signal="pressed" from="ScrollDownButton" to="." method="_on_scroll_down_button_pressed"]
-[connection signal="pressed" from="FilePick" to="." method="_on_file_pick_pressed"]
-[connection signal="file_selected" from="FilePick/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="FileSend" to="." method="_on_file_send_pressed"]
+[connection signal="file_selected" from="FileSend/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="FileReceive" to="." method="_on_file_receive_pressed"]
+[connection signal="text_submitted" from="FileReceive/LineEdit" to="." method="_on_file_receive_line_edit_text_submitted"]
