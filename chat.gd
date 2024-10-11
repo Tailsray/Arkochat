@@ -1,7 +1,6 @@
 extends Node
 
 signal settings_applied(settings: ChatSettings)
-
 var username: String = ""
 @onready var scroll_bar = $Scrollable.get_v_scroll_bar()
 
@@ -70,6 +69,8 @@ func send_message():
 		chay_postavte.rpc()
 	if %TextField.text.containsn("max") or %TextField.text.containsn("макс"):
 		max_verstappen.rpc()
+	if %TextField.text.containsn("fumo"):
+		retrieve_from_server("untitled.png")
 	update_message_list.rpc(username, %TextField.text)
 	%TextField.text = ""
 	scroll_to_the_end()
@@ -106,3 +107,25 @@ func _on_settings_popup_popup_hide():
 
 func _on_scroll_down_button_pressed():
 	scroll_bar.value = scroll_bar.max_value
+
+
+func _on_file_pick_pressed() -> void:
+	$FilePick/FileDialog.show()
+	
+
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	transfer.rpc_id(1,FileAccess.get_file_as_bytes(path), path.get_file())
+	print("Send_file: ", Time.get_ticks_msec())
+
+@rpc("any_peer", "reliable", "call_local")
+func transfer(data: PackedByteArray, filename: String) -> void:
+	print("write_file: ", Time.get_ticks_msec())
+	var sfile = FileAccess.open("user://" + filename, FileAccess.WRITE)
+	sfile.store_buffer(data)
+	print("received file")
+
+
+func retrieve_from_server(filename: String):
+	transfer.rpc_id(multiplayer.get_remote_sender_id(), FileAccess.get_file_as_bytes("user://" + filename), filename)
+	

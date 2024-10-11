@@ -22,3 +22,4 @@ static func create_message(strWho, strWhat) -> Message:
 func on_settings_applied(settings: ChatSettings) -> void:
 	%LabelWho.add_theme_color_override("font_color", settings.text_username_color)
 	%LabelWhat.modulate = settings.text_message_color
+	
