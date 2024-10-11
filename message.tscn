@@ -45,10 +45,10 @@ theme_override_constants/margin_right = 20
 
 [node name="LabelWhat" type="RichTextLabel" parent="H/MarginWhat"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 0, 1)
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_colors/default_color = Color(1, 1, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/normal_font_size = 48

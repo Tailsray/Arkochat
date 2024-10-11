@@ -51,7 +51,7 @@ edit_alpha = false
 
 [node name="BackgroundImageLabel" type="Label" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
 layout_mode = 2
-text = "Backgroung Image   "
+text = "Background Image   "
 
 [node name="BackgroundImagePicker" type="Button" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
 layout_mode = 2

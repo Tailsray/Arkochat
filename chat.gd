@@ -2,7 +2,7 @@ extends Node
 
 signal settings_applied(settings: ChatSettings)
 
-var username: String
+var username: String = ""
 @onready var scroll_bar = $Scrollable.get_v_scroll_bar()
 
 func scroll_to_the_end():
@@ -10,7 +10,8 @@ func scroll_to_the_end():
 	scroll_bar.set_value_no_signal(scroll_bar.max_value)
 
 func _ready():
-	username = FileAccess.open("user://nickname", FileAccess.READ).get_line()
+	if FileAccess.file_exists("user://nickname"):
+		username = FileAccess.open("user://nickname", FileAccess.READ).get_line()
 	if username == "":
 		username = "[анон]"
 	$Control/SetUsernameButton.text = username
