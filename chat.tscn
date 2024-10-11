@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0iy2l7ipij5d"]
+[gd_scene load_steps=5 format=3 uid="uid://crkgfai5afxrd"]
 
-[ext_resource type="Script" path="res://client.gd" id="1"]
+[ext_resource type="Script" path="res://chat.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cbnjlc156mw38" path="res://settings.tscn" id="2_5o6jm"]
+[ext_resource type="AudioStream" uid="uid://bsd66tdopu7fd" path="res://max-verstappen.mp3" id="3_3v81b"]
+[ext_resource type="AudioStream" uid="uid://nbtfuxxp85a4" path="res://чай поставьте.mp3" id="4_4yh8y"]
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -11,14 +14,95 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Settings" parent="." instance=ExtResource("2_5o6jm")]
+
+[node name="SettingsButton" type="Button" parent="Settings"]
+offset_left = 1185.0
+offset_top = 19.0
+offset_right = 1259.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 30
+text = "🏢🏢"
+
+[node name="SettingsPopup" type="PopupPanel" parent="Settings"]
+initial_position = 2
+size = Vector2i(960, 540)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Settings/SettingsPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 956.0
+offset_bottom = 536.0
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Settings/SettingsPopup/ScrollContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="BackgroundColorLabel" type="Label" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Background Color"
+
+[node name="BackgroundColorPicker" type="ColorPickerButton" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Color"
+color = Color(0, 0, 1, 1)
+edit_alpha = false
+
+[node name="BackgroundImageLabel" type="Label" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Backgroung Image   "
+
+[node name="BackgroundImagePicker" type="Button" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="BackgroundImagePicker" type="FileDialog" parent="Settings/SettingsPopup/ScrollContainer/GridContainer/BackgroundImagePicker"]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+
+[node name="TextUsernameColorLabel" type="Label" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Username Color"
+
+[node name="TextUsernameColorPicker" type="ColorPickerButton" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Color"
+color = Color(0, 1, 0, 1)
+edit_alpha = false
+
+[node name="TextMessageColorLabel2" type="Label" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Message Color"
+
+[node name="TextMessageColorPicker" type="ColorPickerButton" parent="Settings/SettingsPopup/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Color"
+color = Color(1, 1, 0, 1)
+edit_alpha = false
+
+[node name="Background" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="BackgroundColor" type="ColorRect" parent="Background"]
+z_index = -2
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0, 0, 1, 1)
 
+[node name="BackgroundTexture" type="TextureRect" parent="Background"]
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="BackupTimer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 10.0
 autostart = true
 
 [node name="UsernameDialog" type="PopupPanel" parent="."]
@@ -32,8 +116,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 636.0
-offset_bottom = 356.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -95,7 +179,7 @@ text = "✈️"
 
 [node name="Scrollable" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_right = 1280.0
+offset_right = 1160.0
 offset_bottom = 620.0
 horizontal_scroll_mode = 0
 
@@ -106,8 +190,33 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 2
 
+[node name="Blastilka" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3v81b")
+
+[node name="ScrollDownButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1188.0
+offset_top = 570.0
+offset_right = 1262.0
+offset_bottom = 630.0
+theme_override_font_sizes/font_size = 30
+text = "👎🏿"
+
+[node name="ChayPostavte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_4yh8y")
+
+[connection signal="settings_applied" from="." to="." method="on_settings_applied"]
+[connection signal="pressed" from="Settings/SettingsButton" to="Settings" method="open_settings"]
+[connection signal="popup_hide" from="Settings/SettingsPopup" to="." method="_on_settings_popup_popup_hide"]
+[connection signal="color_changed" from="Settings/SettingsPopup/ScrollContainer/GridContainer/BackgroundColorPicker" to="Settings" method="_on_background_color_picker_color_changed"]
+[connection signal="pressed" from="Settings/SettingsPopup/ScrollContainer/GridContainer/BackgroundImagePicker" to="Settings" method="_on_background_image_picker_pressed"]
+[connection signal="file_selected" from="Settings/SettingsPopup/ScrollContainer/GridContainer/BackgroundImagePicker/BackgroundImagePicker" to="Settings" method="_on_background_image_picker_file_selected"]
+[connection signal="color_changed" from="Settings/SettingsPopup/ScrollContainer/GridContainer/TextUsernameColorPicker" to="Settings" method="_on_text_username_color_picker_color_changed"]
+[connection signal="color_changed" from="Settings/SettingsPopup/ScrollContainer/GridContainer/TextMessageColorPicker" to="Settings" method="_on_text_message_color_picker_color_changed"]
 [connection signal="timeout" from="BackupTimer" to="." method="_on_timer_timeout"]
 [connection signal="text_submitted" from="UsernameDialog/VBoxContainer/MarginContainer2/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Control/SetUsernameButton" to="." method="_on_set_username_button_pressed"]
 [connection signal="text_submitted" from="Control/TextField" to="." method="_on_text_field_text_submitted"]
 [connection signal="pressed" from="Control/SendButton" to="." method="send_message"]
+[connection signal="pressed" from="ScrollDownButton" to="." method="_on_scroll_down_button_pressed"]

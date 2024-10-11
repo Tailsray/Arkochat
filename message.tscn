@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://glumli5i4d3e"]
+[gd_scene load_steps=2 format=3 uid="uid://dgnbxyat3o77i"]
 
 [ext_resource type="Script" path="res://message.gd" id="1"]
 
@@ -43,13 +43,15 @@ size_flags_stretch_ratio = 17.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 20
 
-[node name="LabelWhat" type="Label" parent="H/MarginWhat"]
+[node name="LabelWhat" type="RichTextLabel" parent="H/MarginWhat"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/default_color = Color(1, 1, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 5
-theme_override_font_sizes/font_size = 48
-autowrap_mode = 3
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+fit_content = true
+scroll_active = false

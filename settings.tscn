@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbnjlc156mw38"]
+
+[ext_resource type="Script" path="res://settings.gd" id="1_tifbn"]
+
+[node name="Settings" type="Node"]
+script = ExtResource("1_tifbn")

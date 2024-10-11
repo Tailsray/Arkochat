@@ -13,14 +13,14 @@ config_version=5
 config/name="Arkochat"
 run/main_scene="res://chat.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/show_image=false
+
+[autoload]
+
+Settings="*res://settings.tscn"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
-
-[editor]
-
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
