@@ -106,3 +106,20 @@ func _on_settings_popup_popup_hide():
 
 func _on_scroll_down_button_pressed():
 	scroll_bar.value = scroll_bar.max_value
+
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	transfer.rpc_id(1,FileAccess.get_file_as_bytes(path), path.get_file())
+	print("Send_file: ", Time.get_ticks_msec())
+
+@rpc("any_peer", "reliable", "call_local")
+func transfer(data: PackedByteArray, filename: String) -> void:
+	print("write_file: ", Time.get_ticks_msec())
+	var sfile = FileAccess.open("user://" + filename, FileAccess.WRITE)
+	sfile.store_buffer(data)
+	print("received file")
+
+
+func retrieve_from_server(filename: String):
+	transfer.rpc_id(multiplayer.get_remote_sender_id(), FileAccess.get_file_as_bytes("user://" + filename), filename)
+	
