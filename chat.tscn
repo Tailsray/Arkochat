@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://chat.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cbnjlc156mw38" path="res://settings.tscn" id="2_5o6jm"]
-[ext_resource type="AudioStream" uid="uid://cx1oho7njtipa" path="res://max-verstappen.mp3" id="3_3v81b"]
-[ext_resource type="AudioStream" uid="uid://cdmqvw3vd4mq2" path="res://чай поставьте.mp3" id="4_4yh8y"]
+[ext_resource type="AudioStream" uid="uid://bsd66tdopu7fd" path="res://max-verstappen.mp3" id="3_3v81b"]
+[ext_resource type="AudioStream" uid="uid://nbtfuxxp85a4" path="res://чай поставьте.mp3" id="4_4yh8y"]
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -91,11 +91,8 @@ anchors_preset = 0
 [node name="BackgroundColor" type="ColorRect" parent="Background"]
 z_index = -2
 layout_mode = 0
-offset_left = 3.0
-offset_top = 2.0
-offset_right = 1283.0
-offset_bottom = 722.0
-mouse_force_pass_scroll_events = false
+offset_right = 1280.0
+offset_bottom = 720.0
 color = Color(0, 0, 1, 1)
 
 [node name="BackgroundTexture" type="TextureRect" parent="Background"]
@@ -119,8 +116,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 636.0
-offset_bottom = 356.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -209,19 +206,6 @@ text = "👎🏿"
 [node name="ChayPostavte" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_4yh8y")
 
-[node name="FilePick" type="Button" parent="."]
-layout_mode = 0
-offset_left = 1189.0
-offset_top = 463.0
-offset_right = 1261.0
-offset_bottom = 533.0
-
-[node name="FileDialog" type="FileDialog" parent="FilePick"]
-title = "Open a File"
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-
 [connection signal="settings_applied" from="." to="." method="on_settings_applied"]
 [connection signal="pressed" from="Settings/SettingsButton" to="Settings" method="open_settings"]
 [connection signal="popup_hide" from="Settings/SettingsPopup" to="." method="_on_settings_popup_popup_hide"]
@@ -236,5 +220,3 @@ access = 2
 [connection signal="text_submitted" from="Control/TextField" to="." method="_on_text_field_text_submitted"]
 [connection signal="pressed" from="Control/SendButton" to="." method="send_message"]
 [connection signal="pressed" from="ScrollDownButton" to="." method="_on_scroll_down_button_pressed"]
-[connection signal="pressed" from="FilePick" to="." method="_on_file_pick_pressed"]
-[connection signal="file_selected" from="FilePick/FileDialog" to="." method="_on_file_dialog_file_selected"]
